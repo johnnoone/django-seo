@@ -5,7 +5,10 @@
 # http://code.google.com/p/django-metatags/
 # Adapted by Will Hardy, 2009
 
-from seo.models import MetaData
+from django.db import models
+
+from seo.models import MetaData, update_callback, delete_callback
+from seo.utils import get_seo_models
 
 class MetaDataMiddleware(object):
     """
@@ -37,3 +40,14 @@ class MetaDataMiddleware(object):
                     return response
         # Return original response just in case
         return response
+	
+
+class AutomaticCreate(object):
+	"""plop
+	"""
+	def __init__(self, arg):
+		## Connect the models listed in settings to the update callback.
+		for model in get_seo_models():
+		    models.signals.post_save.connect(update_callback, sender=model)
+		    models.signals.pre_delete.connect(delete_callback, sender=model)
+

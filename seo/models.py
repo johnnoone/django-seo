@@ -337,10 +337,3 @@ def delete_callback(sender, instance,  **kwargs):
         MetaData.objects.get(content_type=content_type, object_id=instance.pk).delete()
     except:
         pass
-
-## Connect the models listed in settings to the update callback.
-for model in get_seo_models():
-    models.signals.post_save.connect(update_callback, sender=model)
-    models.signals.pre_delete.connect(delete_callback, sender=model)
-
-
