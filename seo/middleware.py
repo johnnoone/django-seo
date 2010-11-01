@@ -42,11 +42,11 @@ class MetaDataMiddleware(object):
         return response
 	
 
-class AutomaticCreate(object):
-	"""plop
+class ModelMiddleware(object):
 	"""
-	def __init__(self, arg):
-		## Connect the models listed in settings to the update callback.
+	Connects the models listed in settings to the update callback.
+	"""
+	def __init__(self):
 		for model in get_seo_models():
 		    models.signals.post_save.connect(update_callback, sender=model)
 		    models.signals.pre_delete.connect(delete_callback, sender=model)
